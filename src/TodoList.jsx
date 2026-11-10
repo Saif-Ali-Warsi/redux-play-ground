@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, deleteTodo } from "./features/todos/todoSlice";
+import { fetchTodos } from "./features/todos/todoThunks";
 
 function TodoList() {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos);
+  const {todos, loding, error} = useSelector((state) => state.todos);
 
   const [task, setTask] = useState("");
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   function handleAddTodo() {
     if (task === "") {
@@ -16,7 +21,7 @@ function TodoList() {
     dispatch(
       addTodo({
         id: Date.now(),
-        title: task,
+        todo: task,
       }),
     );
 
@@ -40,7 +45,7 @@ function TodoList() {
       <button onClick={handleAddTodo}>Add Todo</button>
       {todos.map((item) => (
         <p key={item.id}>
-          {item.title}{" "}
+          {item.todo}{" "}
           <button onClick={() => handleDelete(item.id)}>Delete</button>{" "}
         </p>
       ))}
