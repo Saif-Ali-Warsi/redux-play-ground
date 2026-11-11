@@ -4,7 +4,7 @@ export const userApi = createApi({
   reducerPath: "userApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://dummyjsona.com",
+    baseUrl: "https://dummyjson.com",
   }),
 
   endpoints: (builder) => ({
